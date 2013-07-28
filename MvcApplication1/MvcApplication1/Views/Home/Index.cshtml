@@ -1,0 +1,217 @@
+﻿@model List<MvcApplication1.Controllers.Cell>
+@{
+    ViewBag.Title = "Home Page";
+}
+@section featured {
+}
+@*<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>*@
+<script src="../../Scripts/jquery-1.7.1.js" type="text/javascript"></script>
+<script src="../../Scripts/jquery.popupover.js" type="text/javascript"></script>
+<script type="text/javascript">
+    function clickpopup(e) {
+        var hash = Math.floor(Math.random() * 16777215).toString(16);
+        var divID = e.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.id;
+        var innervalue = e.firstChild.nextSibling.innerHTML;
+        //alert(divID);
+        if (divID != "") {
+            $('#' + divID).html('<div style="font-weight: bold;border: 0px solid #000;">' + innervalue + '</div>');
+            $('#' + divID).css('background-color', '#' + innervalue);
+            $('#' + divID).addClass('valueSet');
+        }
+
+    }
+
+    $(function () {
+        var hideDelay = 500;
+        var currentID;
+        var hideTimer = null;
+        var container = $('<div id="personPopupContainer">'
+      + '<table width="" border="0" cellspacing="0" cellpadding="0" align="center" class="personPopupPopup">'
+      + '<tr>'
+      + '   <td class="corner topLeft"></td>'
+      + '   <td class="top"></td>'
+      + '   <td class="corner topRight"></td>'
+      + '</tr>'
+      + '<tr>'
+      + '   <td class="left"></td>'
+      + '   <td><div id="personPopupContent"></div></td>'
+      + '   <td class="right"></td>'
+      + '</tr>'
+      + '<tr>'
+      + '   <td class="corner bottomLeft">&nbsp;</td>'
+      + '   <td class="bottom"></td>'
+      + '   <td class="corner bottomRight"></td>'
+      + '</tr>'
+      + '</table>'
+      + '</div>');
+
+      //  $('body').append(container);
+        $('#container').click(function (event) {
+          //  alert('THIS is : '+event.target.id);
+            $('#' + event.target.id).append(container);
+            $('#' + event.target.id).addClass('valueSet');
+        });
+
+        $('#validate').click(function (e) {
+            var count = $('.valueSet').length;
+            var remain = $('.cell').length - count;
+            if (remain != 0) {
+                alert('Selected : ' + count + '::' + 'Remaining:' + remain);
+
+            } else {
+                alert('Good job, Sab Khatam Kar dala');
+
+            }
+        });
+
+        $('.personPopupTrigger').live('click', function () {
+            var pos = $(this).offset();
+            var width = $(this).width();
+            container.css({
+                left: (pos.left + width) + 'px',
+                top: pos.top - 5 + 'px'
+            });
+            var menuhtmldata = "<div id='one' class='value1' onclick='clickpopup(this);' >Record 1<div class='innervalue' style='display:none;' >d93fcb</div><div style='background-color:#d93fcb;height:25px;width:25px;'></div></div><br /><div  id='two' class='value2' onclick='clickpopup(this);'>Record 2<div class='innervalue' style='display:none;' >4568e6</div><div style='background-color:#4568e6;height:25px;width:25px;'></div></div><br /><div  id='two' class='value3' onclick='clickpopup(this);'>Record 3<div class='innervalue' style='display:none;' >3fa588</div><div style='background-color:#3fa588;height:25px;width:25px;'></div></div><br /><div  id='three' class='value4' onclick='clickpopup(this);'>Record 4<div class='innervalue' style='display:none;' >f0be73</div><div style='background-color:#f0be73;height:25px;width:25px;'></div></div><br /><div  id='five' class='value5' onclick='clickpopup(this);'>Record 5<div class='innervalue' style='display:none;' >9fdc6f</div><div style='background-color:#9fdc6f;height:25px;width:25px;'></div></div>";
+            $('#personPopupContent').html(menuhtmldata);
+            container.css('display', 'block');
+        });
+
+        $('#personPopupContainer').mouseover(function () {
+            if (hideTimer)
+                clearTimeout(hideTimer);
+        });
+
+        $('#personPopupContainer').mouseout(function () {
+            if (hideTimer)
+                clearTimeout(hideTimer);
+            hideTimer = setTimeout(function () {
+                container.css('display', 'none');
+            }, hideDelay);
+        });
+    });
+    
+</script>
+<style>
+    .value1:hover
+    {
+        background-color:#fff;
+        border:.1px solid #000;
+        }
+        .value2:hover
+    {
+        background-color:#fff;
+        border:1px solid #000;
+        }
+        .value3:hover
+    {
+        background-color:#fff;
+        border:1px solid #000;
+        }
+        .value4:hover
+    {
+        background-color:#fff;
+        border:1px solid #000;
+        }
+        .value5:hover
+    {
+        background-color:#fff;
+        border:1px solid #000;
+        }
+    .cell
+    {
+        width: 100px;
+        height: 100px;
+        float: left;
+        border: 1px solid #ccc;
+        margin: .5px;
+    }
+    
+    
+    #personPopupContainer
+    {
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: none;
+        z-index: 20000;
+    }
+    
+    .personPopupPopup
+    {
+    }
+    
+    #personPopupContent
+    {
+        background-color: #ccc;
+        min-width: 175px;
+        height:250px;
+        overflow-y: scroll;
+    }
+    
+    .personPopupPopup .personPopupImage
+    {
+        margin: 5px;
+        margin-right: 15px;
+    }
+    
+    .personPopupPopup .corner
+    {
+        width: 19px;
+        height: 15px;
+    }
+    
+    .personPopupPopup .topLeft
+    {
+        background: url(../images/balloon_topLeft.png) no-repeat;
+    }
+    
+    .personPopupPopup .bottomLeft
+    {
+        background: url(../images/balloon_bottomLeft.png) no-repeat;
+    }
+    
+    .personPopupPopup .left
+    {
+        background: url(../images/balloon_left.png) repeat-y;
+    }
+    
+    .personPopupPopup .right
+    {
+        background: url(../images/balloon_right.png) repeat-y;
+    }
+    
+    .personPopupPopup .topRight
+    {
+        background: url(../images/balloon_topRight.png) no-repeat;
+    }
+    
+    .personPopupPopup .bottomRight
+    {
+        background: url(../images/balloon_bottomRight.png) no-repeat;
+    }
+    
+    .personPopupPopup .top
+    {
+        background: url(../images/balloon_top.png) repeat-x;
+    }
+    
+    .personPopupPopup .bottom
+    {
+        background: url(../images/balloon_bottom.png) repeat-x;
+        text-align: center;
+    }
+</style>
+
+<div id="container" style="width: 650px; background-color: #FFF;">
+    @for (int i = 0; i < 6; i++)
+    {
+        for (int j = 0; j < 6; j++)
+        {
+        <div id="@i@j" class="cell personPopupTrigger"  >
+        </div>
+        }
+    }
+</div>
+<div style="width: 130px; height: 120px;" id="validate">
+    Validate the Matrix
+</div>
